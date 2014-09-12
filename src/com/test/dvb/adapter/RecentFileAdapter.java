@@ -52,7 +52,7 @@ public class RecentFileAdapter {
 			try {
 				while ((line = bufferedReader.readLine()) != null) {
 					sb.append(line);
-					Variables.recentFilePDF.add(0, line.toString());
+					Variables.recentFilePDF.add(line.toString());
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

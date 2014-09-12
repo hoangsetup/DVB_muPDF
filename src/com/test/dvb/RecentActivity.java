@@ -2,8 +2,8 @@ package com.test.dvb;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,8 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.test.dvb.docviewer.MyPDFViewer;
-import com.test.dvb.docviewer.PdfViewerActivity;
+import com.artifex.mupdfdemo.MuPDFActivity;
 import com.test.dvb.var.Variables;
 
 public class RecentActivity extends Activity {
@@ -103,9 +102,14 @@ public class RecentActivity extends Activity {
 		Variables.recentFilePDF.add(0, path);
 		//
 		try {
-			final Intent intent = new Intent(RecentActivity.this,
-					MyPDFViewer.class);
-			intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, path);
+			// final Intent intent = new Intent(RecentActivity.this,
+			// MyPDFViewer.class);
+			// intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, path);
+			// startActivity(intent);
+			Uri uri = Uri.parse(path);
+			Intent intent = new Intent(this,MuPDFActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setData(uri);
 			startActivity(intent);
 		} catch (Exception e) {
 			e.printStackTrace();

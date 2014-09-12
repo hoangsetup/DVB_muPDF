@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -15,9 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.artifex.mupdfdemo.MuPDFActivity;
 import com.test.dvb.adapter.OpenAdapter;
-import com.test.dvb.docviewer.MyPDFViewer;
-import com.test.dvb.docviewer.PdfViewerActivity;
 import com.test.dvb.units.Item;
 import com.test.dvb.var.Variables;
 
@@ -120,7 +120,7 @@ public class OpenActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				
+
 				if (myVector.get(arg2).getName().equals(Variables.Selected)) {
 					try {
 						openSubFolder(Variables.Selected);
@@ -150,7 +150,7 @@ public class OpenActivity extends Activity {
 		file = new File(root_sd);
 
 		File list[] = file.listFiles();
-		
+
 		myVector.clear();
 
 		for (int i = 0; i < list.length; i++) {
@@ -177,6 +177,8 @@ public class OpenActivity extends Activity {
 			}
 		}
 
+		adp = new OpenAdapter(OpenActivity.this, R.layout.item_listview_open,
+				myVector);
 		adp = new OpenAdapter(OpenActivity.this, R.layout.item_listview_open,
 				myVector);
 
@@ -303,9 +305,14 @@ public class OpenActivity extends Activity {
 
 	private void openPdfIntent(String path) {
 		try {
-			final Intent intent = new Intent(OpenActivity.this,
-					MyPDFViewer.class);
-			intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, path);
+			// final Intent intent = new Intent(OpenActivity.this,
+			// MyPDFViewer.class);
+			// intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, path);
+			// startActivity(intent);
+			Uri uri = Uri.parse(path);
+			Intent intent = new Intent(this, MuPDFActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setData(uri);
 			startActivity(intent);
 		} catch (Exception e) {
 			e.printStackTrace();
